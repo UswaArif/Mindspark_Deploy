@@ -1,18 +1,47 @@
+import { useState } from "react";
 import React from "react";
+import { Link } from "react-router-dom"; // If you're using React Router for links
+import { Menu, X } from "lucide-react";
 
 const AboutPage = () => {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
   return (
-    <div className="bg-[#d9e4eb] min-h-screen flex flex-col">
+    <div className="bg-[#d9e4eb] min-h-screen flex flex-col pt-5 md:pt-0 overflow-x-hidden">
       {/* Header Section */}
-      <header className="flex justify-between items-center px-6 md:px-12 py-4 bg-transparent absolute w-full z-10">
+      <header className="fixed top-0 left-0 w-full bg-transparent backdrop-blur-md shadow-md z-50 flex justify-between items-center px-6 md:px-20 py-4 h-16 transition-all duration-300">
         <div className="text-2xl font-bold">MINDSPARK</div>
+
+        {/* Desktop Navbar */}
         <nav className="hidden md:flex space-x-8">
           <a href="/" className="text-gray-600 font-medium hover:text-black">Home</a>
           <a href="#team" className="text-gray-600 font-medium hover:text-black">Team</a>
           <a href="#vision" className="text-gray-600 font-medium hover:text-black">Vision</a>
           <a href="#mission" className="text-gray-600 font-medium hover:text-black">Mission</a>
         </nav>
+
+        {/* Mobile Menu Button */}
+        <button className="md:hidden" onClick={toggleMobileMenu}>
+          {isMobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
+        </button>
       </header>
+
+      {/* Mobile Navigation Menu */}
+      {isMobileMenuOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 z-40">
+          <div className="absolute top-16 right-0 w-full bg-white shadow-lg z-20 p-6 flex flex-col space-y-4 text-center transition-transform duration-500 transform translate-x-0">
+            <a href="/" className="text-gray-600 font-medium hover:text-black" onClick={toggleMobileMenu}>Home</a>
+            <a href="#team" className="text-gray-600 font-medium hover:text-black" onClick={toggleMobileMenu}>Team</a>
+            <a href="#vision" className="text-gray-600 font-medium hover:text-black" onClick={toggleMobileMenu}>Vision</a>
+            <a href="#mission" className="text-gray-600 font-medium hover:text-black" onClick={toggleMobileMenu}>Mission</a>
+            
+          </div>
+        </div>
+      )}
 
       {/* Hero Section */}
       <div className="text-center mt-24 md:mt-32 px-6 md:px-12">
